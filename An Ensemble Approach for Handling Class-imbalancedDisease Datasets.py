@@ -19,18 +19,31 @@ from google.colab import files
 uploaded = files.upload()
 import io
 
-datasetlist = ['new-thyroid.data'] # add the other 2 datasets
-datasetcolumn = [['target','t3-resin','Total Serum thyroxin','Total serum triiodothyronine','basal','tsh']]
+datasetlist = ['new-thyroid.data','cancer_classification.csv','bupa.data'] # add the other 2 datasets
+datasetcolumn = [['target','t3-resin','Total Serum thyroxin','Total serum triiodothyronine','basal','tsh'],['mean radius', 'mean texture', 'mean perimeter', 'mean area',
+       'mean smoothness', 'mean compactness', 'mean concavity',
+       'mean concave points', 'mean symmetry', 'mean fractal dimension',
+       'radius error', 'texture error', 'perimeter error', 'area error',
+       'smoothness error', 'compactness error', 'concavity error',
+       'concave points error', 'symmetry error', 'fractal dimension error',
+       'worst radius', 'worst texture', 'worst perimeter', 'worst area',
+       'worst smoothness', 'worst compactness', 'worst concavity',
+       'worst concave points', 'worst symmetry', 'worst fractal dimension',
+       'target'],['mcv','alkphos','sgpt','sgot','gammagt','drinks','target']]
 for i in range(len(datasetlist)):
     df = pd.read_csv(io.BytesIO(uploaded[datasetlist[i]),header=None)
     df.columns=datasetcolumn[i]
-    df['target'].replace(3,2,inplace=True)
-    df['target'].replace(1,0,inplace=True)
-    df['target'].replace(2,1,inplace=True)
+    if(i==0):                                 
+        df['target'].replace(3,2,inplace=True)
+        df['target'].replace(1,0,inplace=True)
+        df['target'].replace(2,1,inplace=True)
+    else if(i==2):
+        df['target'].replace(1,0,inplace=True)
+        df['target'].replace(2,1,inplace=True)                                     
     df['target'].value_counts()
     X=df.drop('target',axis=1)
     y=df['target']
-    class condensedNearestNeighbour(BaseCleaningSampler):   #long 
+    class condensedNearestNeighbour(BaseCleaningSampler):  
 
         def __init__(self,
                      sampling_strategy='auto',
