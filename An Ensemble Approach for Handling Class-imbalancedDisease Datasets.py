@@ -20,9 +20,10 @@ uploaded = files.upload()
 import io
 
 datasetlist = ['new-thyroid.data'] # add the other 2 datasets
-for dataset in datasetlist:
-    df = pd.read_csv(io.BytesIO(uploaded[dataset]),header=None)
-    df.columns=['target','t3-resin','Total Serum thyroxin','Total serum triiodothyronine','basal','tsh']
+datasetcolumn = [['target','t3-resin','Total Serum thyroxin','Total serum triiodothyronine','basal','tsh']]
+for i in range(len(datasetlist)):
+    df = pd.read_csv(io.BytesIO(uploaded[datasetlist[i]),header=None)
+    df.columns=datasetcolumn[i]
     df['target'].replace(3,2,inplace=True)
     df['target'].replace(1,0,inplace=True)
     df['target'].replace(2,1,inplace=True)
