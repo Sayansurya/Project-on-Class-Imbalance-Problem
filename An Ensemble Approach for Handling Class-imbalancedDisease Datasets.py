@@ -32,12 +32,12 @@ datasetcolumn = [['target','t3-resin','Total Serum thyroxin','Total serum triiod
        'target'],['mcv','alkphos','sgpt','sgot','gammagt','drinks','target']]
 for i in range(len(datasetlist)):
     df = pd.read_csv(io.BytesIO(uploaded[datasetlist[i]),header=None)
-    df.columns=datasetcolumn[i]
+    df.columns=datasetcolumn[i,:]
     if(i==0):                                 
         df['target'].replace(3,2,inplace=True)
         df['target'].replace(1,0,inplace=True)
         df['target'].replace(2,1,inplace=True)
-    else if(i==2):
+    elif(i==2):
         df['target'].replace(1,0,inplace=True)
         df['target'].replace(2,1,inplace=True)                                     
     df['target'].value_counts()
